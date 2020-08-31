@@ -1,0 +1,38 @@
+
+## Loading and preprocessing the data
+```{r loaddata}
+activity <- read.csv("activity.csv")
+activity = transform(activity, date = as.Date(date))
+```
+
+## Total number of steps taken per day
+```{r dailysteps}
+dailySteps <- aggregate(steps ~ date, data=activity, FUN=sum)
+hist(x=dailySteps$steps, breaks=10, main="Daily Steps", xlab="Steps", col="lightblue")
+```
+
+## What is the mean and median total number of steps taken per day?
+```{r meanmedian}
+mean(dailySteps$steps)
+median(dailySteps$steps)
+```
+
+## What is the average daily activity pattern?
+```{r avgactivity}
+intervals <- aggregate(steps ~ interval, data=activity, FUN=mean)
+maxInterval <- intervals$interval[intervals$steps == max(intervals$steps)]
+plot(steps ~ interval, data=intervals, type="l")
+text(1800, 200, paste("Maximum step interval = ", maxInterval), col="blue", font=2)
+```
+
+## Imputing missing values
+### Number of rows with missing values
+```{r totalmissingvalues}
+sum(is.na(activity))
+```
+```{r daysmissingvalues}
+naTotalsByDate <- function(x) sum(is.na(activity[activity$date==x,1]))
+naDailyCount <- sapply(unique(activity$date), FUN=naTotalsByDate)
+```
+
+## Are there differences in activity patterns between weekdays and weekends?
