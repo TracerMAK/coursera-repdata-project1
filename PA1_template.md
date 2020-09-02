@@ -55,7 +55,7 @@ sum(is.na(activity))
 ```
 ## [1] 2304
 ```
-### Replace missing step values with rounded mean of the interval step values 
+### Replace missing step values with the rounded mean of the individual intervals 
 
 ```r
 means <- aggregate(activity$steps, by=list(activity$interval), mean, na.rm=TRUE)
@@ -65,6 +65,11 @@ names(mean_map) <- means[,1]
 activity_updated = activity
 missing <- which(is.na(activity_updated))
 activity_updated[missing,1] = mean_map[as.character(activity_updated[missing,3])]
+sum(is.na(activity_updated))
+```
+
+```
+## [1] 0
 ```
 
 ### Updated Total number of steps taken per day
@@ -75,6 +80,9 @@ hist(x=dailySteps$steps, breaks=20, main="Daily Steps Updated", xlab="Steps", co
 ```
 
 ![plot of chunk dailystepsupdated](figure/dailystepsupdated-1.png)
+
+Replacing the missing values with the inverval averages only increased the
+frequency of one histogram bar. This adds little insight into the data analysis.
 
 ### What is the updated mean and median total number of steps taken per day?
 
@@ -93,5 +101,20 @@ median(dailySteps$steps)
 ```
 ## [1] 10762
 ```
+Since the missing values were across the entirety of only 8 days, imputed values
+had no noticeable effect on the mean or median.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```r
+activity_updated$daytype = factor(
+        ifelse(weekdays(activity_updated$date) %in% c("Saturday", "Sunday"),
+                "weekend", "weekday"))
+table(activity_updated$daytype)
+```
+
+```
+## 
+## weekday weekend 
+##   12960    4608
+```

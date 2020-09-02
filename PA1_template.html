@@ -249,7 +249,7 @@ text(1800, 200, paste(&quot;Maximum step interval = &quot;, maxInterval), col=&q
 <pre><code>## [1] 2304
 </code></pre>
 
-<h3>Replace missing step values with rounded mean of the interval step values</h3>
+<h3>Replace missing step values with the rounded mean of the individual intervals</h3>
 
 <pre><code class="r">means &lt;- aggregate(activity$steps, by=list(activity$interval), mean, na.rm=TRUE)
 mean_map &lt;- round(means[,2])
@@ -258,6 +258,10 @@ names(mean_map) &lt;- means[,1]
 activity_updated = activity
 missing &lt;- which(is.na(activity_updated))
 activity_updated[missing,1] = mean_map[as.character(activity_updated[missing,3])]
+sum(is.na(activity_updated))
+</code></pre>
+
+<pre><code>## [1] 0
 </code></pre>
 
 <h3>Updated Total number of steps taken per day</h3>
@@ -267,6 +271,9 @@ hist(x=dailySteps$steps, breaks=20, main=&quot;Daily Steps Updated&quot;, xlab=&
 </code></pre>
 
 <p><img src="data:image/png;base64,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" alt="plot of chunk dailystepsupdated"/></p>
+
+<p>Replacing the missing values with the inverval averages only increased the
+frequency of one histogram bar. This adds little insight into the data analysis.</p>
 
 <h3>What is the updated mean and median total number of steps taken per day?</h3>
 
@@ -282,7 +289,21 @@ hist(x=dailySteps$steps, breaks=20, main=&quot;Daily Steps Updated&quot;, xlab=&
 <pre><code>## [1] 10762
 </code></pre>
 
+<p>Since the missing values were across the entirety of only 8 days, imputed values
+had no noticeable effect on the mean or median.</p>
+
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
+
+<pre><code class="r">activity_updated$daytype = factor(
+        ifelse(weekdays(activity_updated$date) %in% c(&quot;Saturday&quot;, &quot;Sunday&quot;),
+                &quot;weekend&quot;, &quot;weekday&quot;))
+table(activity_updated$daytype)
+</code></pre>
+
+<pre><code>## 
+## weekday weekend 
+##   12960    4608
+</code></pre>
 
 </body>
 
