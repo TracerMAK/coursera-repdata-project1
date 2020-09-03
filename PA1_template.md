@@ -89,8 +89,9 @@ hist(x=dailySteps$steps, breaks=20, main="Daily Steps Updated", xlab="Steps", co
 
 ![plot of chunk dailystepsupdated](figure/dailystepsupdated-1.png)
 
-*Replacing the missing values with the inverval averages altered only one
- histogram bar. This does not add much insight into the data analysis.*
+*Replacing the missing values with the interval averages altered only the histogram
+ bar representing the mean daily step value. This provided little insight about
+ the data.*
  
 <br />
 
@@ -113,7 +114,7 @@ median(dailySteps$steps)
 ```
 
 *Since the missing values were across the entirety of only 8 days, imputed
- values little effect on the mean or median.*
+ values had little effect on the mean or median.*
 
 </br>
 
