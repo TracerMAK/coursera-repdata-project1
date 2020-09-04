@@ -1,3 +1,10 @@
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
+<br />
 
 ## Loading and preprocessing the data
 
@@ -13,7 +20,7 @@ dailySteps <- aggregate(steps ~ date, data=activity, FUN=sum)
 hist(x=dailySteps$steps, breaks=20, main="Daily Steps", xlab="Steps", col="lightblue")
 ```
 
-![plot of chunk dailysteps](figure/dailysteps-1.png)
+![](PA1_template_files/figure-html/dailysteps-1.png)<!-- -->
 
 ## What is the mean and median total number of steps taken per day?
 
@@ -42,7 +49,7 @@ plot(steps ~ interval, data=intervals, type="l")
 text(1800, 200, paste("Maximum step interval = ", maxInterval), col="blue", font=2)
 ```
 
-![plot of chunk avgactivity](figure/avgactivity-1.png)
+![](PA1_template_files/figure-html/avgactivity-1.png)<!-- -->
 
 ## Imputing missing values
 
@@ -87,7 +94,7 @@ dailySteps <- aggregate(steps ~ date, data=activity_updated, FUN=sum)
 hist(x=dailySteps$steps, breaks=20, main="Daily Steps Updated", xlab="Steps", col="lightblue")
 ```
 
-![plot of chunk dailystepsupdated](figure/dailystepsupdated-1.png)
+![](PA1_template_files/figure-html/dailystepsupdated-1.png)<!-- -->
 
 *Replacing the missing values with the interval averages altered only the histogram
  bar representing the mean daily step value. This provided little insight about
@@ -143,7 +150,7 @@ names(stepavgs) <- c("interval", "daytype", "steps")
 ggplot(stepavgs, aes(x=interval, y=steps)) + facet_wrap(~daytype, ncol=1) + geom_line()
 ```
 
-![plot of chunk timeseries](figure/timeseries-1.png)
+![](PA1_template_files/figure-html/timeseries-1.png)<!-- -->
 
 *On weekdays there is more step activity in the morning hours and during times
  near the end of the work day.*
